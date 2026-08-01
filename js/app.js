@@ -12,7 +12,7 @@
   // versión de los archivos de vídeo/imagen propios. Subir este número cuando se
   // cambie un loop o un frame de carga obliga al navegador a descargarlos de nuevo
   // (evita que sirva una copia vieja guardada en caché).
-  var ASSET_VER = "12";
+  var ASSET_VER = "13";
   function ver(u){
     if (!u) return u;
     if (/^data:/.test(u) || /^https?:/.test(u)) return u; // no tocar dataURL ni externos
