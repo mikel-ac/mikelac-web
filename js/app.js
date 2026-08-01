@@ -12,7 +12,7 @@
   // versión de los archivos de vídeo/imagen propios. Subir este número cuando se
   // cambie un loop o un frame de carga obliga al navegador a descargarlos de nuevo
   // (evita que sirva una copia vieja guardada en caché).
-  var ASSET_VER = "9";
+  var ASSET_VER = "10";
   function ver(u){
     if (!u) return u;
     if (/^data:/.test(u) || /^https?:/.test(u)) return u; // no tocar dataURL ni externos
@@ -129,7 +129,7 @@
       var et = esc(t);
       out = out.split(et).join("<strong>" + et + "</strong>");
     });
-    return out;
+    return out.replace(/\n/g, "<br>");   // respeta los saltos de línea del texto
   }
 
   // --- VISTA CORPORATIVO ---
@@ -138,8 +138,12 @@
     var media = "";
     if (k.link){
       media = '<a class="media" href="' + esc(k.link) + '" target="_blank" rel="noopener">' +
-                '<div class="pc"><div class="pt"></div></div>' +
-                '<div class="mlabel">' + esc(k.buttonLabel || "Ver canal") + ' \u2197</div></a>';
+                '<video class="mvid" autoplay muted loop playsinline poster="' + ver("assets/corp_poster.jpg") + '">' +
+                  '<source src="' + ver("assets/corp.mp4") + '" type="video/mp4"></video>' +
+                '<div class="mover">' +
+                  '<div class="pc"><div class="pt"></div></div>' +
+                  '<div class="mlabel">' + esc(k.buttonLabel || "Ver canal") + '</div>' +
+                '</div></a>';
     }
     var el = document.getElementById("view-corp");
     if (el) el.innerHTML =
