@@ -12,7 +12,7 @@
   // versión de los archivos de vídeo/imagen propios. Subir este número cuando se
   // cambie un loop o un frame de carga obliga al navegador a descargarlos de nuevo
   // (evita que sirva una copia vieja guardada en caché).
-  var ASSET_VER = "11";
+  var ASSET_VER = "12";
   function ver(u){
     if (!u) return u;
     if (/^data:/.test(u) || /^https?:/.test(u)) return u; // no tocar dataURL ni externos
@@ -135,24 +135,26 @@
   // --- VISTA CORPORATIVO ---
   function buildCorp(){
     var k = C.corporativo || {};
-    var media = "";
-    if (k.link){
-      media = '<a class="media" href="' + esc(k.link) + '" target="_blank" rel="noopener">' +
-                '<video class="mvid" autoplay muted loop playsinline poster="' + ver("assets/corp_poster.jpg") + '">' +
-                  '<source src="' + ver("assets/corp.mp4") + '" type="video/mp4"></video>' +
-                '<div class="mover">' +
-                  '<div class="pc"><div class="pt"></div></div>' +
-                  '<div class="mlabel">' + esc(k.buttonLabel || "Ver canal") + '</div>' +
-                '</div></a>';
-    }
     var el = document.getElementById("view-corp");
-    if (el) el.innerHTML =
-      media +
+    if (!el) return;
+    var hot = "";
+    if (k.link){
+      // zona pulsable centrada: solo ahí se activa el overlay y el enlace al canal
+      hot = '<a class="chot" href="' + esc(k.link) + '" target="_blank" rel="noopener" aria-label="' + esc(k.buttonLabel || "Ver canal") + '">' +
+              '<div class="cveil">' +
+                '<div class="pc"><div class="pt"></div></div>' +
+                '<div class="mlabel">' + esc(k.buttonLabel || "Ver canal") + '</div>' +
+              '</div></a>';
+    }
+    el.innerHTML =
+      '<video class="cvid" autoplay muted loop playsinline poster="' + ver("assets/corp_poster.jpg") + '">' +
+        '<source src="' + ver("assets/corp.mp4") + '" type="video/mp4"></video>' +
       '<div class="cscrim"></div>' +
       '<div class="ctext">' +
         '<h2 class="ptitle">' + esc(k.title || "Vídeos corporativos") + '</h2>' +
         '<p class="ptext">' + boldHighlights(k.text || "", k.highlight) + '</p>' +
-      '</div>';
+      '</div>' +
+      hot;
   }
 
   // --- VISTA VISUALES ---
