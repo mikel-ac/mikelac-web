@@ -12,7 +12,7 @@
   // versión de los archivos de vídeo/imagen propios. Subir este número cuando se
   // cambie un loop o un frame de carga obliga al navegador a descargarlos de nuevo
   // (evita que sirva una copia vieja guardada en caché).
-  var ASSET_VER = "8";
+  var ASSET_VER = "9";
   function ver(u){
     if (!u) return u;
     if (/^data:/.test(u) || /^https?:/.test(u)) return u; // no tocar dataURL ni externos
@@ -51,16 +51,23 @@
   }
 
   // --- HOME ---
+  // ¿Pantalla estrecha (móvil)? Si es así usamos la versión vertical del loop.
+  // Se decide una sola vez al cargar, para no recargar el vídeo al girar/redimensionar.
+  var IS_MOBILE = window.matchMedia && window.matchMedia("(max-width:820px)").matches;
   function homeScreen() {
     var h = C.home || {};
+    // loop y frame de carga: versión vertical en móvil, horizontal en escritorio.
+    // Si algún día no existiera el archivo vertical, cae de nuevo en el horizontal.
+    var loopSrc   = IS_MOBILE ? (h.loopMobile   || "assets/loop-mobile.mp4")   : (h.loop   || "");
+    var posterSrc = IS_MOBILE ? (h.posterMobile || "assets/poster-mobile.jpg") : (h.poster || "");
     // primera línea: la partimos tras la primera coma para poder forzar el salto
     // ahí en móvil ("...Bilbao," / "trabajando en remoto."), manteniéndola entera en escritorio
     var t1 = h.taglineLine1 || "", ci = t1.indexOf(", "), tagL1;
     if (ci !== -1) tagL1 = '<span class="p1">' + esc(t1.slice(0, ci + 1)) + '</span> <span class="p2">' + esc(t1.slice(ci + 2)) + '</span>';
     else tagL1 = esc(t1);
     return '<section class="screen hero bg-black" data-bg="full">' +
-      (h.poster ? '<div class="poster" style="background-image:url(\'' + ver(h.poster) + '\')"></div>' : '') +
-      '<video autoplay muted loop playsinline ' + (h.poster ? 'poster="' + ver(h.poster) + '"' : '') + '><source src="' + ver(h.loop||"") + '" type="video/mp4"></video>' +
+      (posterSrc ? '<div class="poster" style="background-image:url(\'' + ver(posterSrc) + '\')"></div>' : '') +
+      '<video autoplay muted loop playsinline ' + (posterSrc ? 'poster="' + ver(posterSrc) + '"' : '') + '><source src="' + ver(loopSrc) + '" type="video/mp4"></video>' +
       '<div class="scrim"></div>' +
       '<div class="home-copy">' +
         '<h1 class="home-name">' + twoLineName(h.name) + '</h1>' +
