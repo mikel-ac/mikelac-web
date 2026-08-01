@@ -12,7 +12,7 @@
   // versión de los archivos de vídeo/imagen propios. Subir este número cuando se
   // cambie un loop o un frame de carga obliga al navegador a descargarlos de nuevo
   // (evita que sirva una copia vieja guardada en caché).
-  var ASSET_VER = "10";
+  var ASSET_VER = "11";
   function ver(u){
     if (!u) return u;
     if (/^data:/.test(u) || /^https?:/.test(u)) return u; // no tocar dataURL ni externos
@@ -147,12 +147,11 @@
     }
     var el = document.getElementById("view-corp");
     if (el) el.innerHTML =
-      '<div class="wrap">' +
-        '<div class="ctext">' +
-          '<h2 class="ptitle">' + esc(k.title || "Vídeos corporativos") + '</h2>' +
-          '<p class="ptext">' + boldHighlights(k.text || "", k.highlight) + '</p>' +
-        '</div>' +
-        media +
+      media +
+      '<div class="cscrim"></div>' +
+      '<div class="ctext">' +
+        '<h2 class="ptitle">' + esc(k.title || "Vídeos corporativos") + '</h2>' +
+        '<p class="ptext">' + boldHighlights(k.text || "", k.highlight) + '</p>' +
       '</div>';
   }
 
@@ -190,7 +189,11 @@
     var IG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/></svg>';
     var rows = "";
     if (c.email) rows += '<a class="lkrow" href="mailto:' + esc(c.email) + '"><span class="mini">' + MAIL + '</span><span class="val">' + esc(c.email) + '</span></a>';
-    if (c.instagramUrl || c.instagram) rows += '<a class="lkrow" href="' + esc(c.instagramUrl || "#") + '" target="_blank" rel="noopener"><span class="mini">' + IG + '</span><span class="val">' + esc(c.instagram || "Instagram") + '</span></a>';
+    if (c.instagramUrl || c.instagram) {
+      // el icono ya identifica la red, así que mostramos el usuario sin la arroba
+      var ig = (c.instagram || "Instagram").replace(/^@/, "");
+      rows += '<a class="lkrow" href="' + esc(c.instagramUrl || "#") + '" target="_blank" rel="noopener"><span class="mini">' + IG + '</span><span class="val">' + esc(ig) + '</span></a>';
+    }
     return '<div class="co-id">' +
         '<div class="co-name">' + twoLineName(hm.name) + '</div>' +
         '<p class="co-about">' + esc(hm.taglineLine1) + '<br><br>' + esc(hm.taglineLine2) + '</p>' +
