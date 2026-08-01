@@ -1,0 +1,10 @@
+# Forzar que el navegador siempre revalide estos archivos (evita que muestre
+# versiones antiguas guardadas en caché tras subir cambios).
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+/content.js
+  Cache-Control: public, max-age=0, must-revalidate
+/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+/js/*
+  Cache-Control: public, max-age=0, must-revalidate

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin · Mikel Agirrezabalaga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header class="abar">
+    <div class="abrand">Mikel Agirrezabalaga · <span>Admin</span></div>
+    <div class="aactions">
+      <label class="btn ghost" for="loadfile">Cargar content.js</label>
+      <input id="loadfile" type="file" accept=".js,.json" hidden>
+      <button class="btn primary" id="download">Descargar content.js</button>
+    </div>
+  </header>
+
+  <nav class="atabs">
+    <button class="tab on" data-tab="proyectos">Proyectos</button>
+    <button class="tab" data-tab="otros">Visuales · Corporativo · Home · Contacto</button>
+  </nav>
+
+  <main class="awrap">
+    <!-- PROYECTOS -->
+    <section class="panel" data-panel="proyectos">
+      <div class="cols">
+        <aside class="list-col">
+          <div class="list-head">
+            <span>Proyectos</span>
+            <button class="btn small" id="addProject">+ Añadir</button>
+          </div>
+          <ol class="plist" id="plist"></ol>
+          <p class="hint">Arrastra para reordenar, o usa las flechas. El orden aquí es el orden en la web.</p>
+        </aside>
+        <div class="form-col" id="formCol">
+          <p class="empty">Selecciona un proyecto de la lista para editarlo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- OTROS -->
+    <section class="panel" data-panel="otros" hidden>
+      <div id="otrosCol"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="content.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

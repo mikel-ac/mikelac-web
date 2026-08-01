@@ -1,0 +1,65 @@
+MIKEL AGIRREZABALAGA · PORTFOLIO — Flujo de PROYECTOS
+=====================================================
+
+CÓMO VERLO
+----------
+- Haz doble clic en "index.html". Se abrirá en tu navegador.
+- La primera vez necesitas INTERNET (para las tipografías de Google, las
+  miniaturas de Vimeo/YouTube y los vídeos del reproductor).
+- Pruébalo también en el móvil para ver la versión móvil.
+
+QUÉ HAY DENTRO (estructura)
+---------------------------
+- index.html ............ la página
+- css/styles.css ........ todos los estilos
+- js/app.js ............. la lógica (lee el contenido y dibuja la web)
+- content.js ............ TU CONTENIDO (los 8 proyectos, textos, enlaces...)
+- assets/loop.mp4 ....... el loop de la portada
+- assets/poster.jpg ..... la imagen mientras carga el loop
+
+EL ARCHIVO DE CONTENIDO
+-----------------------
+Todo tu contenido vive en "content.js". Más adelante el panel de administración
+generará este archivo por ti; de momento está montado con tus 8 proyectos reales.
+(Es un .js en vez de .json por un motivo técnico: así la web se abre con doble
+clic sin necesidad de un servidor. El flujo de editar/descargar/subir será igual.)
+
+LO QUE YA FUNCIONA
+------------------
+- Portada con loop de vídeo + tu nombre y frase.
+- Pantalla 01 especial (con el "about" de proyectos).
+- Las 8 pantallas de proyecto con sus plantillas y fondos.
+- Al pulsar un frame se abre el reproductor (Vimeo o YouTube).
+- Menú de escritorio + menú hamburguesa en móvil.
+- Pie de contacto.
+- En ESCRITORIO el frame va limpio y el cursor se convierte en "PLAY" al pasar
+  por encima. En MÓVIL aparece el icono de play sobre el frame.
+- Indicador "Siguiente proyecto" / "Contacto" según lo que venga.
+
+PENDIENTE (siguientes pasos)
+----------------------------
+- Las páginas "Vídeos corporativos" y "Visuales" (sus enlaces avisan de que se
+  construyen en el siguiente paso).
+- El panel de administración para editar todo esto tú mismo.
+- Miniaturas propias (ahora se cogen automáticamente de Vimeo/YouTube).
+- Tus enlaces reales de Instagram y Vimeo en el pie.
+
+NOTA SOBRE YOUTUBE
+------------------
+Los vídeos de YouTube muestran su propia barra/logo en el reproductor; eso no se
+puede quitar. Los de Vimeo se ven más limpios.
+
+=====================================================
+PANEL DE ADMINISTRACIÓN (admin.html)
+=====================================================
+- Abre "admin.html" (doble clic). Es tu panel privado para editar el contenido.
+- IMPORTANTE — cómo se guarda: el admin NO publica solo. Editas, pulsas
+  "Descargar content.js", y SUBES ese archivo a tu hosting sustituyendo el
+  anterior. Editar -> Descargar -> Subir.
+- "Cargar content.js" sirve para seguir editando a partir de un content.js que
+  ya tengas (por ejemplo el último que subiste).
+- De momento está la edición de PROYECTOS (añadir, borrar, reordenar arrastrando
+  o con flechas, y todos los campos). Visuales/Corporativo/Home/Contacto y la
+  previsualización llegan en el siguiente paso. (Al descargar, esas secciones se
+  conservan intactas aunque aún no se editen aquí.)
+- La página admin no debe enlazarse desde la web; es solo para ti.

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mikel Agirrezabalaga · Editor de vídeo</title>
+<meta name="description" content="Mikel Agirrezabalaga — Editor de vídeo con base en Bilbao, trabajando en remoto.">
+
+<!-- Open Graph / previa al compartir. NOTA: si conectas un dominio propio,
+     cambia las 3 direcciones de abajo (og:url, og:image, twitter:image)
+     por https://TU-DOMINIO/ y https://TU-DOMINIO/assets/og.jpg -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mikel Agirrezabalaga">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Mikel Agirrezabalaga · Editor de vídeo">
+<meta property="og:description" content="Editor de vídeo con base en Bilbao, trabajando en remoto. A veces hago visuales en directo.">
+<meta property="og:url" content="https://mikelac.com/">
+<meta property="og:image" content="https://mikelac.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mikel Agirrezabalaga — Editor de vídeo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mikel Agirrezabalaga · Editor de vídeo">
+<meta name="twitter:description" content="Editor de vídeo con base en Bilbao, trabajando en remoto. A veces hago visuales en directo.">
+<meta name="twitter:image" content="https://mikelac.com/assets/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=12">
+</head>
+<body>
+
+  <header class="hd">
+    <a class="brand" href="#" data-brand data-top>Mikel Agirrezabalaga</a>
+    <nav>
+      <a href="#" data-nav="proyectos">Proyectos</a>
+      <a href="#" data-nav="corporativo">Corporativo</a>
+      <a href="#" data-nav="visuales">Visuales</a>
+      <button class="env" aria-label="Contacto" title="Contacto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.5" y="5" width="19" height="14" rx="1.5"/><path d="M3 6l9 7 9-7"/></svg>
+      </button>
+    </nav>
+    <button class="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </header>
+
+  <div class="overlay">
+    <button class="close" aria-label="Cerrar menú">&times;</button>
+    <a href="#" data-nav="proyectos">Proyectos</a>
+    <a href="#" data-nav="corporativo">Corporativo</a>
+    <a href="#" data-nav="visuales">Visuales</a>
+    <a href="#" data-nav="contacto">Contacto</a>
+    <div class="cdata"></div>
+  </div>
+
+  <main id="scroller"></main>
+  <section id="view-corp" class="view page-corp"></section>
+  <section id="view-vis" class="view page-vis"></section>
+
+  <div class="contact-ov" id="contactOv">
+    <button class="co-close" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    <div class="co-inner" id="coLinks"></div>
+  </div>
+
+  <div class="modal">
+    <button class="x" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    <div class="box">
+      <div class="vid"></div>
+      <div class="cap">
+        <h2 class="mt"></h2>
+        <p class="mdesc"></p>
+        <button class="more" type="button">Ver más</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="js/app.js?v=12"></script>
+</body>
+</html>

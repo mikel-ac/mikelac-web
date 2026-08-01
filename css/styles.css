@@ -1,0 +1,356 @@
+/* ===========================================================
+   Mikel Agirrezabalaga · Portfolio — estilos del flujo Proyectos
+   =========================================================== */
+:root{
+  --red:#D60001; --ink:#0c0c0c; --black:#000;
+  --serif:"Newsreader",Georgia,serif;
+  --sans:"Helvetica Neue",Arial,sans-serif;
+  --gut:6vw;                       /* gutter horizontal común */
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html,body{ height:100%; }
+body{ background:#000; color:#fff; font-family:var(--serif); -webkit-font-smoothing:antialiased; overflow:hidden; }
+
+/* cursor PLAY (escritorio): se aplica a las zonas reproducibles */
+.playable{ cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='62' height='26'><text x='2' y='19' font-family='Arial,Helvetica,sans-serif' font-size='15' letter-spacing='3' fill='white'>PLAY</text></svg>") 6 13, pointer; }
+
+/* ---------- Cabecera ---------- */
+.hd{ position:fixed; top:0; left:0; right:0; z-index:300; display:flex; align-items:center; justify-content:space-between;
+     padding:22px var(--gut); pointer-events:none; }
+.hd a, .hd button{ pointer-events:auto; }
+.hd .brand{ font-family:var(--serif); font-size:clamp(16px,1.5vw,20px); color:currentColor; text-decoration:none; letter-spacing:.2px;
+     opacity:0; transform:translateY(-6px); transition:opacity .5s ease, transform .5s ease; }
+body.scrolled .hd .brand{ opacity:1; transform:none; }
+.hd nav{ display:flex; align-items:center; gap:30px; }
+.hd nav a{ font-family:var(--sans); text-transform:uppercase; letter-spacing:1.6px; font-size:12px; color:currentColor; text-decoration:none; opacity:1; }
+.hd nav a:hover{ opacity:.65; }
+.hd .env{ width:22px; height:22px; color:currentColor; background:none; border:0; }
+.hd .burger{ display:none; flex-direction:column; gap:5px; background:none; border:0; }
+.hd .burger span{ width:24px; height:1.6px; background:currentColor; display:block; }
+
+/* ===========================================================
+   COLOR DEL MENÚ — sincronizado al píxel con el fondo
+   Mezcla "difference" + texto rojo:
+     · sobre fondo NEGRO  -> se ve ROJO
+     · sobre fondo ROJO   -> se ve NEGRO
+   El corte lo hace el propio fondo, así que aunque el nombre
+   quede a caballo entre dos pantallas, cada parte toma su color.
+   =========================================================== */
+.hd{ mix-blend-mode:difference; color:var(--red); }
+.hd .brand, .hd nav a, .hd .env, .hd .burger, .hd .burger span{ color:inherit; }
+/* Sobre pantallas con imagen/vídeo (home y frame a pantalla completa) la mezcla
+   daría colores raros sobre la foto: ahí el menú va en blanco fijo, sin mezcla. */
+body.hd-full .hd{ mix-blend-mode:normal; color:#fff; }
+
+/* ---------- Menú móvil (overlay rojo) ---------- */
+.overlay{ position:fixed; inset:0; z-index:400; background:var(--red); display:flex; flex-direction:column; justify-content:center; padding:0 9vw;
+          transform:translateY(-100%); transition:transform .45s var(--ease); }
+.overlay.open{ transform:none; }
+.overlay .close{ position:absolute; top:22px; right:6vw; background:none; border:0; color:var(--ink); font-size:30px; line-height:1; }
+.overlay a{ font-family:var(--serif); text-transform:uppercase; color:var(--ink); text-decoration:none; font-size:clamp(34px,9vw,64px); line-height:1.12; }
+.overlay .cdata{ margin-top:8vh; font-family:var(--sans); font-size:13px; letter-spacing:.4px; color:var(--ink); }
+.overlay .cdata a{ font-family:var(--sans); font-size:13px; text-transform:none; display:inline; }
+
+/* ---------- Scroller / pantallas ---------- */
+#scroller{ height:100dvh; overflow-y:scroll; scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+.screen{ position:relative; height:100dvh; scroll-snap-align:start; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:96px var(--gut) 9vh; }
+
+/* paletas */
+.screen.bg-black{ background:#000; --tt:var(--red); --desc:#bcbcbc; --meta:#9e9e9e; --about:#ededed; --fo:rgba(255,255,255,.09); --pcb:rgba(255,255,255,.55); --pc:#fff; --cue:#9e9e9e; }
+.screen.bg-red{ background:var(--red); --tt:var(--ink); --desc:var(--ink); --meta:rgba(0,0,0,.7); --about:var(--ink); --fo:rgba(0,0,0,.2); --pcb:rgba(0,0,0,.45); --pc:rgba(0,0,0,.85); --cue:rgba(0,0,0,.6); }
+.screen.bg-full{ background:#000; --tt:var(--red); --desc:#ececec; --meta:#e6e6e6; --fo:rgba(255,255,255,.0); --pcb:rgba(255,255,255,.6); --pc:#fff; --cue:#e6e6e6; }
+
+/* tipografía común */
+.meta{ font-family:var(--sans); text-transform:uppercase; letter-spacing:2.5px; font-size:clamp(10px,.9vw,12px); color:var(--meta); }
+.title{ font-family:var(--serif); font-weight:300; text-transform:uppercase; color:var(--tt); line-height:.99; letter-spacing:0; }
+.desc{ font-family:var(--serif); font-weight:300; font-style:italic; color:var(--desc); line-height:1.5; font-size:clamp(15px,1.35vw,19px); }
+.screen.bg-red .desc{ font-weight:400; }
+.about{ font-family:var(--serif); font-weight:400; color:var(--about); line-height:1.42; font-size:clamp(16px,1.6vw,22px); }
+.rule{ width:42px; height:1px; background:var(--red); }
+/* alineación óptica: el título serif tiene un pequeño "aire" lateral; lo compenso
+   para que su borde izquierdo cuadre con el metadato (solo en plantillas alineadas a la izq.) */
+.intro .title, .t-1 .title, .t-2 .title, .t-3 .title, .t-6 .title, .t-7 .title{ margin-left:-0.035em; }
+
+/* frame */
+.frame{ position:relative; background-size:cover; background-position:center; }
+.play{ position:absolute; inset:0; display:none; align-items:center; justify-content:center; pointer-events:none; }
+.pc{ width:52px; height:52px; border-radius:50%; border:1px solid var(--pcb); display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.15); }
+.pt{ width:0; height:0; border-style:solid; border-width:7px 0 7px 12px; border-color:transparent transparent transparent var(--pc); margin-left:3px; }
+
+/* ===========================================================
+   ANIMACIONES DE ENTRADA (al llegar a cada pantalla)
+   Los textos entran con fundidos en tiempos ligeramente
+   distintos; el frame, con una escala fina.
+   =========================================================== */
+/* Estado inicial de los textos animables */
+.meta, .title, .desc, .about, .rule,
+.home-name, .home-tag,
+.foot .co-id, .foot .co-foot{
+  opacity:0; transform:translateY(14px);
+  transition:opacity .7s ease, transform .8s var(--ease);
+}
+/* Al activarse la pantalla (.in) entran, escalonados */
+.screen.in .meta      { opacity:1; transform:none; transition-delay:.02s; }
+.screen.in .title     { opacity:1; transform:none; transition-delay:.12s; }
+.screen.in .desc      { opacity:1; transform:none; transition-delay:.26s; }
+.screen.in .about,
+.screen.in .rule      { opacity:1; transform:none; transition-delay:.40s; }
+.screen.in .home-name { opacity:1; transform:none; transition-delay:.10s; }
+.screen.in .home-tag  { opacity:1; transform:none; transition-delay:.30s; }
+.screen.in .ftitle    { opacity:1; transform:none; transition-delay:.05s; }
+.screen.in .co-id     { opacity:1; transform:none; transition-delay:.05s; }
+.screen.in .co-foot   { opacity:1; transform:none; transition-delay:.22s; }
+
+/* ===========================================================
+   ENTRADA DEL FRAME  —  *** ÚNICO SITIO A TOCAR ***
+   Para probar otros efectos de aparición del frame en el
+   futuro, cambia SOLO este bloque (se aplica a todos los frames).
+   =========================================================== */
+:root{
+  --frame-from-scale:.965;   /* escala de partida (1 = sin escala) */
+  --frame-dur:1s;            /* duración */
+  --frame-delay:.16s;        /* retardo respecto a los textos */
+  --frame-ease:cubic-bezier(.22,.61,.36,1);
+}
+.frame{
+  opacity:0; transform:scale(var(--frame-from-scale));
+  transition:opacity .9s ease, transform var(--frame-dur) var(--frame-ease);
+  transition-delay:var(--frame-delay);
+}
+.screen.in .frame{ opacity:1; transform:scale(1); }
+/* fin del bloque del frame */
+
+@media (prefers-reduced-motion: reduce){
+  .meta,.title,.desc,.about,.rule,.home-name,.home-tag,
+  .foot .co-id,.foot .co-foot,.frame,.t-7 .full{
+    opacity:1 !important; transform:none !important; transition:none !important;
+  }
+}
+
+/* ---------- HOME (hero) ---------- */
+.hero{ padding:0; }
+.hero video, .hero .poster{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.hero .poster{ background-size:cover; background-position:center; }
+.hero .scrim{ position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.66), rgba(0,0,0,.05) 42%, rgba(0,0,0,.18)); }
+.hero .home-copy{ position:absolute; left:var(--gut); bottom:9vh; z-index:3; }
+.hero .home-name{ font-family:var(--serif); font-weight:300; text-transform:uppercase; color:var(--red); line-height:.98; font-size:clamp(40px,8.2vw,124px); }
+.hero .home-tag{ font-family:var(--serif); font-style:italic; color:#fff; font-size:clamp(17px,1.9vw,26px); line-height:1.4; margin-top:22px; }
+.hero .home-tag .l1, .hero .home-tag .l2{ display:block; }
+.hero .home-tag .l1{ white-space:nowrap; }
+.hero .cue{ color:#dcdcdc; }
+
+/* indicador "siguiente" (común) */
+.cue{ position:absolute; bottom:24px; left:0; right:0; width:fit-content; margin:0 auto; z-index:5; display:flex; align-items:center; justify-content:center; gap:9px;
+      font-family:var(--sans); font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--cue); animation:bob 2.6s ease-in-out infinite; }
+.cue .ar{ font-size:13px; }
+.cue.hidden{ display:none; }
+.cue.clickable{ cursor:pointer; }
+.cue.clickable:hover{ color:#fff; }
+@keyframes bob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(5px);} }
+
+/* ---------- Pantalla 01 (intro) ---------- */
+.intro .wrap{ width:min(1240px,100%); }
+.intro .meta{ margin-bottom:18px; }
+.intro .top{ display:grid; grid-template-columns:1fr 47%; gap:5vw; align-items:stretch; }
+.intro .left{ display:flex; flex-direction:column; }
+.intro .title{ font-size:clamp(36px,5vw,88px); }
+.intro .desc{ margin-top:24px; max-width:44ch; }
+.intro .frame{ width:100%; min-height:300px; }
+.intro .aboutwrap{ margin-top:6vh; }
+.intro .aboutwrap .rule{ margin-bottom:18px; }
+.intro .about{ max-width:52ch; }
+
+/* ---------- Plantillas ---------- */
+/* 1 · frame izq */
+.t-1 .wrap{ display:grid; grid-template-columns:60% 1fr; gap:5vw; align-items:center; width:min(1240px,100%); }
+.t-1 .frame{ width:100%; aspect-ratio:16/9; }
+.t-1 .meta{ margin-bottom:14px; } .t-1 .title{ font-size:clamp(30px,4.2vw,72px); } .t-1 .desc{ margin-top:20px; max-width:38ch; }
+/* 2 · frame der */
+.t-2 .wrap{ display:grid; grid-template-columns:1fr 60%; gap:5vw; align-items:center; width:min(1240px,100%); }
+.t-2 .frame{ width:100%; aspect-ratio:16/9; }
+.t-2 .meta{ margin-bottom:14px; } .t-2 .title{ font-size:clamp(30px,4.2vw,72px); } .t-2 .desc{ margin-top:20px; max-width:38ch; }
+/* 3 · centrado + texto debajo */
+.t-3 .wrap{ width:min(1040px,100%); } .t-3 .frame{ width:100%; aspect-ratio:16/9; }
+.t-3 .below{ display:flex; justify-content:space-between; align-items:flex-start; gap:5vw; margin-top:26px; }
+.t-3 .meta{ margin-bottom:10px; } .t-3 .title{ font-size:clamp(30px,4.2vw,68px); } .t-3 .desc{ max-width:34ch; padding-top:6px; }
+/* 5 · centrado total */
+.t-5 .wrap{ width:min(960px,100%); text-align:center; }
+.t-5 .meta{ margin-bottom:14px; } .t-5 .title{ font-size:clamp(34px,5vw,84px); }
+.t-5 .frame{ width:min(760px,90%); aspect-ratio:16/9; margin:28px auto 0; } .t-5 .desc{ margin:24px auto 0; max-width:46ch; }
+/* 6 · asimétrico */
+.t-6 .wrap{ position:relative; width:min(1240px,100%); height:min(72vh,620px); }
+.t-6 .tcell{ position:absolute; top:2%; left:0; width:66%; }
+.t-6 .meta{ margin-bottom:12px; } .t-6 .title{ font-size:clamp(38px,5.6vw,88px); }
+.t-6 .frame{ position:absolute; bottom:0; right:0; width:54%; aspect-ratio:16/9; }
+.t-6 .desc{ position:absolute; left:0; bottom:0; width:40%; }
+/* 7 · pantalla completa */
+.t-7{ padding:0; }
+.t-7 .full{ position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transform:scale(1.06); transition:opacity .9s ease, transform 1.2s var(--ease); }
+.screen.t-7.in .full{ opacity:1; transform:scale(1); }
+.t-7 .scrim{ position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,.12) 42%, rgba(0,0,0,.4)); pointer-events:none; }
+.t-7 .cap{ position:absolute; z-index:3; left:var(--gut); right:var(--gut); bottom:11vh; pointer-events:none; }
+.t-7 .title{ font-size:clamp(40px,6vw,104px); text-shadow:0 2px 34px rgba(0,0,0,.55); }
+.t-7 .desc{ color:#ececec; font-weight:300; margin-top:16px; max-width:46ch; text-shadow:0 1px 14px rgba(0,0,0,.6); }
+.t-7 .meta{ margin-bottom:12px; }
+
+/* ---------- Pie de contacto ---------- */
+.foot{ background:var(--red); flex-direction:column; align-items:flex-start; justify-content:space-between; padding:15vh 9vw 11vh; }
+
+/* ===========================================================
+   VISTAS Corporativo y Visuales (páginas propias)
+   =========================================================== */
+.view{ display:none; }
+body.v-corp #scroller, body.v-vis #scroller{ display:none; }
+body.v-corp #view-corp{ display:flex; }
+body.v-vis  #view-vis{ display:flex; }
+
+/* Corporativo: texto a la izquierda + media/botón a la derecha (fondo negro) */
+.page-corp{ position:fixed; inset:0; z-index:120; background:#000; align-items:center; justify-content:center; padding:120px var(--gut) 9vh; overflow-y:auto; }
+.page-corp .wrap{ display:grid; grid-template-columns:1.05fr .95fr; gap:6vw; align-items:center; width:min(1240px,100%); }
+.page-corp .eyebrow{ font-family:var(--sans); text-transform:uppercase; letter-spacing:2.5px; font-size:clamp(10px,.9vw,12px); color:#9e9e9e; margin-bottom:18px; }
+.page-corp .ptitle{ font-family:var(--serif); font-weight:300; text-transform:uppercase; color:var(--red); line-height:.99; font-size:clamp(34px,4.6vw,76px); margin-left:-0.035em; }
+.page-corp .ptext{ font-family:var(--serif); font-weight:300; color:#e6e6e6; line-height:1.6; font-size:clamp(16px,1.4vw,20px); margin-top:26px; max-width:48ch; }
+.page-corp .ptext strong{ font-weight:600; color:#fff; }
+.page-corp .media{ position:relative; aspect-ratio:16/9; border:1px solid rgba(255,255,255,.18); background:#0a0a0a; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; text-decoration:none; transition:border-color .2s, background .2s; }
+.page-corp .media:hover{ border-color:var(--red); background:#0e0e0e; }
+.page-corp .media .pc{ width:54px; height:54px; border-radius:50%; border:1px solid rgba(255,255,255,.5); display:flex; align-items:center; justify-content:center; }
+.page-corp .media .pt{ width:0; height:0; border-style:solid; border-width:7px 0 7px 12px; border-color:transparent transparent transparent #fff; margin-left:3px; }
+.page-corp .media .mlabel{ font-family:var(--sans); text-transform:uppercase; letter-spacing:2px; font-size:11px; color:#cfcfcf; }
+.page-corp .media:hover .mlabel{ color:#fff; }
+
+/* Visuales: loop a pantalla completa + titular y párrafo encima */
+.page-vis{ position:fixed; inset:0; z-index:120; padding:0; }
+.page-vis video, .page-vis .poster{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.page-vis .poster{ background-size:cover; background-position:center; }
+.page-vis .scrim{ position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.72), rgba(0,0,0,.1) 45%, rgba(0,0,0,.25)); }
+.page-vis .vcopy{ position:absolute; left:var(--gut); right:var(--gut); bottom:11vh; z-index:3; max-width:30ch; }
+.page-vis .vtitle{ font-family:var(--serif); font-weight:300; text-transform:uppercase; color:var(--red); line-height:.98; font-size:clamp(44px,8vw,120px); text-shadow:0 2px 34px rgba(0,0,0,.5); margin-left:-0.035em; }
+.page-vis .vtext{ font-family:var(--serif); font-weight:300; color:#f0f0f0; line-height:1.55; font-size:clamp(17px,1.7vw,23px); margin-top:20px; text-shadow:0 1px 14px rgba(0,0,0,.65); }
+.page-vis .vtext strong{ font-weight:600; color:#fff; }
+
+@media (max-width:820px){
+  .page-corp{ padding:100px 26px 60px; }
+  .page-corp .wrap{ grid-template-columns:1fr; gap:30px; }
+  .page-corp .ptitle{ font-size:38px; } .page-corp .ptext{ font-size:16px; max-width:none; }
+  .page-vis .vtitle{ font-size:46px; } .page-vis .vtext{ font-size:17px; }
+  .page-vis .vcopy{ bottom:9vh; max-width:none; }
+}
+
+/* ---------- Overlay de Contacto (editorial · accesible desde cualquier página) ---------- */
+.contact-ov{ position:fixed; inset:0; z-index:500; background:var(--red); opacity:0; pointer-events:none; transition:opacity .32s ease; }
+.contact-ov.open{ opacity:1; pointer-events:auto; }
+.contact-ov .co-close{ position:absolute; top:26px; right:6vw; width:46px; height:46px; border-radius:50%; background:transparent; border:1.5px solid rgba(0,0,0,.55);
+  color:var(--ink); cursor:pointer; z-index:5; display:flex; align-items:center; justify-content:center; transition:background .18s, color .18s, border-color .18s; }
+.contact-ov .co-close:hover{ background:var(--ink); color:var(--red); border-color:var(--ink); }
+.contact-ov .co-close svg{ width:18px; height:18px; }
+.co-inner{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; padding:15vh 9vw 11vh; }
+.co-name{ font-family:var(--serif); font-weight:300; text-transform:uppercase; color:var(--ink); line-height:1; font-size:clamp(17px,1.7vw,22px); margin-bottom:16px; }
+.co-about{ font-family:var(--serif); font-weight:300; color:var(--ink); line-height:1.45; font-size:clamp(16px,1.6vw,20px); max-width:32ch; }
+.co-foot{ display:flex; gap:28px; align-items:center; }
+.co-foot .lkrow{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink); }
+.co-foot .lkrow .mini{ width:22px; height:22px; flex:none; display:flex; }
+.co-foot .lkrow .mini svg{ width:22px; height:22px; }
+.co-foot .lkrow .val{ font-family:var(--serif); font-style:italic; font-size:clamp(19px,2vw,26px); }
+.co-foot .lkrow:hover .val{ text-decoration:underline; }
+@media (max-width:760px){ .co-foot{ flex-direction:column; align-items:flex-start; gap:18px; } .co-inner{ padding:14vh 8vw 9vh; } }
+
+/* ---------- Reproductor (modal) ---------- */
+.modal{ position:fixed; inset:0; z-index:900; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.98); padding:4vh 4vw; }
+.modal.open{ display:flex; }
+.modal .box{ width:min(1040px,100%); display:flex; flex-direction:column; align-items:center; gap:22px; }
+.modal .vid{ position:relative; width:100%; aspect-ratio:16/9; background:#000; }
+.modal .vid iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+.modal .cap{ width:100%; }
+.modal .cap .mt{ font-family:var(--serif); font-weight:300; text-transform:uppercase; color:#fff; line-height:1; letter-spacing:.3px; font-size:clamp(22px,2.4vw,32px); }
+.modal .cap .mdesc{ font-family:var(--serif); font-style:italic; color:#bcbcbc; line-height:1.5; margin-top:14px; max-width:70ch; }
+.modal .cap .mdesc.clamp{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.modal .cap .more{ display:none; margin-top:12px; font-family:var(--sans); text-transform:uppercase; letter-spacing:2px; font-size:11px; color:#8a8a8a; cursor:pointer; border:0; background:none; }
+.modal .cap .more:hover{ color:#fff; }
+.modal .cap .more.show{ display:inline-block; }
+/* X de cerrar: círculo en la esquina, separada del vídeo */
+.modal .x{ position:fixed; top:24px; right:32px; z-index:6; width:48px; height:48px; border-radius:50%;
+  background:none; border:1.5px solid rgba(255,255,255,.6); color:#fff; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:background .18s, color .18s, border-color .18s; }
+.modal .x:hover{ background:#fff; color:#000; border-color:#fff; }
+.modal .x svg{ width:20px; height:20px; }
+
+/* ---------- Cursor PLAY vs icono play (escritorio/móvil) ---------- */
+@media (hover:hover) and (pointer:fine){
+  /* escritorio: frame limpio + cursor PLAY (la clase .playable la pone el JS) */
+  .play{ display:none; }
+}
+@media (hover:none), (pointer:coarse){
+  /* móvil: icono play visible, sin cursor especial */
+  .play{ display:flex; }
+  .playable{ cursor:pointer; }
+}
+
+/* ---------- MÓVIL ---------- */
+@media (max-width:820px){
+  .hd{ padding:18px 24px; }
+  /* En móvil quitamos la mezcla "difference" (que dejaba el icono invisible),
+     pero mantenemos la MISMA lógica de color que en escritorio mediante clases:
+     rojo sobre fondos negros, negro sobre el rojo, blanco sobre el vídeo. */
+  .hd{ mix-blend-mode:normal; }            /* hereda color:var(--red) -> rojo sobre negro */
+  body.hd-red .hd{ color:#000; }           /* sobre el rojo, negro */
+  /* (body.hd-full .hd ya pone blanco sobre el vídeo) */
+  .hd nav{ display:none; }
+  .hd .env{ display:none; }
+  .hd .burger{ display:flex; }
+  .hd .burger span{ background:currentColor; }
+  /* El nombre del menú sigue la MISMA lógica que en escritorio: oculto en el hero
+     (ya está en grande), aparece al hacer el primer scroll (clase .scrolled). */
+
+  .screen{ padding:84px 26px 64px; }
+
+  /* contenidas -> stack vertical centrado: título + descripción, luego frame */
+  .t-1 .wrap, .t-2 .wrap{ display:flex; flex-direction:column; justify-content:center; gap:0; height:auto; }
+  .t-1 .frame, .t-2 .frame{ order:2; margin-top:22px; }
+  .t-1 .txt, .t-2 .txt{ order:1; }
+  .t-1 .title, .t-2 .title{ font-size:34px; } .t-1 .desc, .t-2 .desc{ font-size:16px; max-width:none; }
+
+  .t-3 .wrap{ display:flex; flex-direction:column; justify-content:center; }
+  .t-3 .frame{ order:2; margin-top:22px; }
+  .t-3 .below{ order:1; flex-direction:column; gap:14px; margin-top:0; }
+  .t-3 .title{ font-size:34px; } .t-3 .desc{ font-size:16px; }
+
+  .t-5 .wrap{ display:flex; flex-direction:column; justify-content:center; }
+  .t-5 .desc{ order:2; } .t-5 .frame{ order:3; width:100%; margin-top:22px; } .t-5 .title{ font-size:34px; } .t-5 .desc{ font-size:16px; }
+
+  .t-6 .wrap{ position:static; height:auto; display:flex; flex-direction:column; justify-content:center; }
+  .t-6 .tcell, .t-6 .frame, .t-6 .desc{ position:static; width:100%; }
+  .t-6 .tcell{ order:1; } .t-6 .desc{ order:2; margin-top:16px; } .t-6 .frame{ order:3; margin-top:22px; }
+  .t-6 .title{ font-size:36px; }
+
+  /* intro */
+  .intro .top{ display:flex; flex-direction:column; }
+  .intro .frame{ order:2; margin-top:22px; min-height:0; aspect-ratio:16/9; }
+  .intro .left{ order:1; } .intro .title{ font-size:36px; } .intro .desc{ font-size:16px; max-width:none; }
+  .intro .aboutwrap{ margin-top:30px; } .intro .about{ font-size:17px; }
+
+  .t-7 .cap{ bottom:13%; } .t-7 .title{ font-size:38px; }
+
+  /* Home: el nombre escala con el ancho para no salirse de los márgenes laterales,
+     y la frase se mantiene dentro de los márgenes (left+right). La primera línea
+     rompe tras "Bilbao," (la coma) cuando pasa a apilarse. */
+  .hero .home-copy{ right:var(--gut); }
+  .hero .home-name{ font-size:clamp(30px,9.5vw,44px); }
+  .hero .home-tag{ font-size:17px; }
+  .hero .home-tag .l1{ white-space:normal; }
+  .hero .home-tag .p2{ display:block; }
+
+  .foot{ padding:14vh 8vw 9vh; }
+}
+
+/* Pantallas BAJAS y anchas (móvil en horizontal, ventanas cortas): la plantilla
+   asimétrica deja de usar posiciones fijas y se apila (título arriba, luego frame),
+   para que el título nunca quede solapado ni por debajo del frame. */
+@media (min-width:821px) and (max-height:620px){
+  .screen{ padding-top:64px; padding-bottom:5vh; }
+  .t-6 .wrap{ position:static; height:auto; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; }
+  .t-6 .tcell, .t-6 .desc{ position:static; width:100%; }
+  .t-6 .frame{ position:static; width:auto; height:46vh; max-height:50vh; aspect-ratio:16/9; }
+  .t-6 .tcell{ order:1; } .t-6 .desc{ order:2; margin-top:10px; } .t-6 .frame{ order:3; margin-top:14px; }
+  .t-6 .title{ font-size:clamp(26px,6vh,46px); }
+}
