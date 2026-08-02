@@ -19,15 +19,22 @@ body{ background:#000; color:#fff; font-family:var(--serif); -webkit-font-smooth
 .hd{ position:fixed; top:0; left:0; right:0; z-index:300; display:flex; align-items:center; justify-content:space-between;
      padding:22px var(--gut); pointer-events:none; }
 .hd a, .hd button{ pointer-events:auto; }
-.hd .brand{ font-family:var(--serif); font-size:clamp(16px,1.5vw,20px); color:currentColor; text-decoration:none; letter-spacing:.2px;
-     opacity:0; transform:translateY(-6px); transition:opacity .5s ease, transform .5s ease; }
-body.scrolled .hd .brand{ opacity:1; transform:none; }
+.hd .brand{ position:relative; font-family:var(--serif); font-size:clamp(16px,1.5vw,20px); color:currentColor; text-decoration:none; letter-spacing:.2px;
+     opacity:0; transform:translateY(-6px); transition:opacity .5s ease, transform .5s ease;
+     pointer-events:none; }   /* mientras está oculto no debe ser pulsable */
+/* Zona táctil ampliada en altura (48px), conservando el ancho del texto */
+.hd .brand::after{ content:""; position:absolute; left:0; right:0; top:50%; transform:translateY(-50%); height:48px; }
+body.scrolled .hd .brand{ opacity:1; transform:none; pointer-events:auto; }
 .hd nav{ display:flex; align-items:center; gap:30px; }
 .hd nav a{ font-family:var(--sans); text-transform:uppercase; letter-spacing:1.6px; font-size:12px; color:currentColor; text-decoration:none; opacity:1; }
 .hd nav a:hover{ opacity:.65; }
 .hd .env{ width:22px; height:22px; color:currentColor; background:none; border:0; cursor:pointer; opacity:1; transition:opacity .18s ease; }
 .hd .env:hover{ opacity:.65; }
-.hd .burger{ cursor:pointer; }
+.hd .burger{ cursor:pointer; position:relative; }
+/* Zona táctil ampliada (48x48, el mínimo recomendado para el dedo) sin alterar
+   el aspecto ni la maquetación: es un área invisible centrada sobre el icono. */
+.hd .burger::after{ content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:48px; height:48px; }
 .hd .burger{ display:none; flex-direction:column; gap:5px; background:none; border:0; }
 .hd .burger span{ width:24px; height:1.6px; background:currentColor; display:block; }
 
@@ -49,7 +56,8 @@ body.hd-full .hd{ mix-blend-mode:normal; color:#fff; }
 .overlay{ position:fixed; inset:0; z-index:400; background:var(--red); display:flex; flex-direction:column; justify-content:center; padding:0 9vw;
           transform:translateY(-100%); transition:transform .45s var(--ease); }
 .overlay.open{ transform:none; }
-.overlay .close{ position:absolute; top:22px; right:6vw; background:none; border:0; color:var(--ink); font-size:30px; line-height:1; }
+.overlay .close{ position:absolute; top:22px; right:6vw; background:none; border:0; color:var(--ink); font-size:30px; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; width:48px; height:48px; margin:-9px -12px 0 0; }
 .overlay a{ font-family:var(--serif); text-transform:uppercase; color:var(--ink); text-decoration:none; font-size:clamp(34px,9vw,64px); line-height:1.12; }
 .overlay .cdata{ margin-top:8vh; font-family:var(--sans); font-size:13px; letter-spacing:.4px; color:var(--ink); }
 .overlay .cdata a{ font-family:var(--sans); font-size:13px; text-transform:none; display:inline; }
