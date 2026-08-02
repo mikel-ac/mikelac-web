@@ -2,7 +2,7 @@
    Mikel Agirrezabalaga · Portfolio — estilos del flujo Proyectos
    =========================================================== */
 :root{
-  --red:#D60001; --ink:#0c0c0c; --black:#000;
+  --red:#D60001; --ink:#000; --black:#000;
   --serif:"Newsreader",Georgia,serif;
   --sans:"Helvetica Neue",Arial,sans-serif;
   --gut:6vw;                       /* gutter horizontal común */
@@ -289,13 +289,15 @@ body.v-vis  #view-vis{ display:flex; }
 .contact-ov .co-close:hover{ background:var(--ink); color:var(--red); border-color:var(--ink); }
 .contact-ov .co-close svg{ width:18px; height:18px; }
 .co-inner{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; padding:15vh 9vw 11vh; }
-.co-name{ font-family:var(--serif); font-weight:500; text-transform:uppercase; color:var(--ink); line-height:1; font-size:clamp(18px,1.8vw,23px); margin-bottom:16px; }
-.co-about{ font-family:var(--serif); font-weight:400; color:var(--ink); line-height:1.5; font-size:clamp(17px,1.75vw,22px); max-width:32ch; }
+.co-name{ font-family:var(--serif); font-weight:500; text-transform:uppercase; color:var(--ink); line-height:1.05; font-size:clamp(26px,2.4vw,44px); margin-bottom:18px; }
+.co-about{ font-family:var(--serif); font-weight:400; color:var(--ink); line-height:1.55; font-size:clamp(18px,1.5vw,26px); max-width:42ch; }
+.co-about p + p{ margin-top:.62em; }   /* separación medida entre las dos frases */
+.co-about .p2{ display:block; }        /* salto siempre tras la coma */
 .co-foot{ display:flex; gap:40px; align-items:center; flex-wrap:wrap; }
 .co-foot .lkrow{ display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--ink); }
 .co-foot .lkrow .mini{ width:21px; height:21px; flex:none; display:flex; }
 .co-foot .lkrow .mini svg{ width:21px; height:21px; }
-.co-foot .lkrow .val{ font-family:var(--serif); font-weight:500; font-size:clamp(19px,2vw,26px); }
+.co-foot .lkrow .val{ font-family:var(--serif); font-weight:500; font-size:clamp(18px,1.3vw,23px); }
 .co-foot .lkrow:hover .val{ text-decoration:underline; text-underline-offset:4px; }
 @media (max-width:760px){ .co-foot{ flex-direction:column; align-items:flex-start; gap:18px; } .co-inner{ padding:14vh 8vw 9vh; } }
 

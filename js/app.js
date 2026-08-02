@@ -196,9 +196,14 @@
       var ig = (c.instagram || "Instagram").replace(/^@/, "");
       rows += '<a class="lkrow" href="' + esc(c.instagramUrl || "#") + '" target="_blank" rel="noopener"><span class="mini">' + IG + '</span><span class="val">' + esc(ig) + '</span></a>';
     }
+    // la primera frase rompe siempre tras la coma ("...Bilbao," / "trabajando en remoto."),
+    // igual que en la home, para que la lectura sea natural en cualquier pantalla
+    var t1 = hm.taglineLine1 || "", ci = t1.indexOf(", "), l1;
+    if (ci !== -1) l1 = '<span class="p1">' + esc(t1.slice(0, ci + 1)) + '</span> <span class="p2">' + esc(t1.slice(ci + 2)) + '</span>';
+    else l1 = esc(t1);
     return '<div class="co-id">' +
         '<div class="co-name">' + twoLineName(hm.name) + '</div>' +
-        '<p class="co-about">' + esc(hm.taglineLine1) + '<br><br>' + esc(hm.taglineLine2) + '</p>' +
+        '<div class="co-about"><p>' + l1 + '</p><p>' + esc(hm.taglineLine2) + '</p></div>' +
       '</div>' +
       '<div class="co-foot">' + rows + '</div>';
   }
