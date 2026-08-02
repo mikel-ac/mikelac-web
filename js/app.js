@@ -233,12 +233,6 @@
 
   // nombre en cabecera y menú
   document.querySelectorAll("[data-brand]").forEach(function(e){ e.textContent = (C.home && C.home.name) || ""; });
-  var ov = document.querySelector(".overlay .cdata");
-  if (ov) {
-    var c = C.contact || {};
-    ov.innerHTML = (c.email ? '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a><br>' : '') +
-                   (c.instagram ? '<a href="' + esc(c.instagramUrl||"#") + '" target="_blank" rel="noopener">Instagram ' + esc(c.instagram) + '</a>' : '');
-  }
 
   // etiquetas + clic del indicador inferior: lleva a la siguiente pantalla
   var screens = Array.prototype.slice.call(scroller.querySelectorAll(".screen"));
