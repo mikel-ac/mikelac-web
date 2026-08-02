@@ -26,9 +26,13 @@ body{ background:#000; color:#fff; font-family:var(--serif); -webkit-font-smooth
 .hd .brand::after{ content:""; position:absolute; left:0; right:0; top:50%; transform:translateY(-50%); height:48px; }
 body.scrolled .hd .brand{ opacity:1; transform:none; pointer-events:auto; }
 .hd nav{ display:flex; align-items:center; gap:30px; }
-.hd nav a{ font-family:var(--sans); text-transform:uppercase; letter-spacing:1.6px; font-size:12px; color:currentColor; text-decoration:none; opacity:1; }
+.hd nav a{ position:relative; font-family:var(--sans); text-transform:uppercase; letter-spacing:1.6px; font-size:12px; color:currentColor; text-decoration:none; opacity:1; }
+/* Zona de clic ampliada en altura (40px) sin alterar el aspecto: el texto mide
+   solo ~14px de alto, por debajo del mínimo recomendado para puntero (24px). */
+.hd nav a::after{ content:""; position:absolute; left:0; right:0; top:50%; transform:translateY(-50%); height:40px; }
 .hd nav a:hover{ opacity:.65; }
-.hd .env{ width:22px; height:22px; color:currentColor; background:none; border:0; cursor:pointer; opacity:1; transition:opacity .18s ease; }
+.hd .env{ position:relative; width:22px; height:22px; color:currentColor; background:none; border:0; cursor:pointer; opacity:1; transition:opacity .18s ease; }
+.hd .env::after{ content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:40px; height:40px; }
 .hd .env:hover{ opacity:.65; }
 .hd .burger{ cursor:pointer; position:relative; }
 /* Zona táctil ampliada (48x48, el mínimo recomendado para el dedo) sin alterar
